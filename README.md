@@ -5,11 +5,9 @@ An updated version of the Atlas Gravity Sensor Library - Added proper support fo
 
 The following modules have full ESP support
 
-- [ ] do_grav
-- [ ] orp_grav 
+- [x] do_grav
+- [x] orp_grav 
 - [x] ph_grav
-
-Check back regularly, I may have updated the other modules.
 
 > **Note**: Please create an issue if you would like me to add something specific.
 >

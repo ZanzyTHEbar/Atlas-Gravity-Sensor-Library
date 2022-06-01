@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 */
 
-#ifndef BASE_GRAV_H
-#define BASE_GRAV_H
+#ifndef ORP_ISO_GRAV_H
+#define ORP_ISO_GRAV_H
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -31,26 +31,14 @@ SOFTWARE
 #include "WProgram.h"
 #endif
 
-class Gravity_Base{
-	public:
-        enum grav_type{
-            GRAV_PH,
-            GRAV_DO,
-            GRAV_ORP
-        };
-        
-        virtual bool begin();
-	
-		virtual float read_voltage();
+#include <orp_grav.h>
 
-    protected:
-	
-		uint8_t pin = A0;
-        
-		static const int volt_avg_len = 1000;
-        static const uint8_t EEPROM_SIZE_CONST = 16;
-		static const uint8_t magic_char = 0xAA;
-        
-        int16_t EEPROM_offset = 0;
+class Gravity_ORP_Isolated : public Gravity_ORP
+{
+public:
+	Gravity_ORP_Isolated(uint8_t pin) : Gravity_ORP(pin){};
+
+	float read_voltage();
 };
+
 #endif

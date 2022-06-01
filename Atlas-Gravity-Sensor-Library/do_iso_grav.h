@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 */
 
-#ifndef PH_ISO_GRAV_H
-#define PH_ISO_GRAV_H
+#ifndef DO_ISO_GRAV_H
+#define DO_ISO_GRAV_H
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -31,13 +31,14 @@ SOFTWARE
 #include "WProgram.h"
 #endif
 
-#include <ph_grav.h>
+#include <do_grav.h>
 
-class Gravity_pH_Isolated : public Gravity_pH{
-	public:
-        Gravity_pH_Isolated(uint8_t pin) : Gravity_pH(pin) {};
-    
-		float read_voltage();
+class Gravity_DO_Isolated : public Gravity_DO
+{
+public:
+	Gravity_DO_Isolated(uint8_t pin) : Gravity_DO(pin){};
+
+	float read_voltage();
 };
 
 #endif

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 */
 
-#ifndef ORP_ISO_GRAV_H
-#define ORP_ISO_GRAV_H
+#ifndef PH_GRAV_H
+#define PH_GRAV_H
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -31,13 +31,40 @@ SOFTWARE
 #include "WProgram.h"
 #endif
 
-#include <orp_grav.h>
+#include <base_grav.h>
 
-class Gravity_ORP_Isolated : public Gravity_ORP{
-	public:
-        Gravity_ORP_Isolated(uint8_t pin) : Gravity_ORP(pin) {};
-    
-		float read_voltage();
+class Gravity_pH : public Gravity_Base
+{
+public:
+	Gravity_pH(uint8_t pin);
+
+	bool begin();
+
+	virtual float read_voltage();
+	float read_ph(float voltage_mV);
+	float read_ph();
+
+	void cal_mid(float voltage_mV);
+	void cal_mid();
+
+	void cal_low(float voltage_mV);
+	void cal_low();
+
+	void cal_high(float voltage_mV);
+	void cal_high();
+
+	void cal_clear();
+
+private:
+	struct PH
+	{
+		const uint8_t magic = magic_char;
+		const enum grav_type type = GRAV_PH;
+		float mid_cal = 1500;
+		float low_cal = 2030;
+		float high_cal = 975;
+	};
+	struct PH pH;
 };
 
 #endif

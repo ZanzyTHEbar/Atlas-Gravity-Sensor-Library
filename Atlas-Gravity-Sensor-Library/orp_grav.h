@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 */
 
-#ifndef DO_GRAV_H
-#define DO_GRAV_H
+#ifndef ORP_GRAV_H
+#define ORP_GRAV_H
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -33,33 +33,28 @@ SOFTWARE
 
 #include <base_grav.h>
 
-#define DEFAULT_SAT_VOLTAGE_CONST (40.0*11.0)
+class Gravity_ORP : public Gravity_Base
+{
+public:
+	Gravity_ORP(uint8_t pin);
 
-class Gravity_DO : public Gravity_Base{
-	public:
-	
-		Gravity_DO(uint8_t pin);
-		
-		bool begin();
-	
-		virtual float read_voltage();
-		float read_do_percentage(float voltage_mV);
-		float read_do_percentage();
-        
-        float cal();
-        float cal_clear();
-        
-    protected:
-		static const int volt_avg_len = 1000;
-	private:
-		
-        const float DEFAULT_SAT_VOLTAGE = DEFAULT_SAT_VOLTAGE_CONST;
-		struct DO {
-		  const uint8_t magic = magic_char;
-          const enum grav_type type = GRAV_DO;
-		  float full_sat_voltage = DEFAULT_SAT_VOLTAGE_CONST;
-		};
-		struct DO Do;
+	bool begin();
+
+	virtual float read_voltage();
+	float read_orp(float voltage_mV);
+	float read_orp();
+
+	float cal(float value);
+	float cal_clear();
+
+private:
+	struct ORP
+	{
+		const uint8_t magic = magic_char;
+		const enum grav_type type = GRAV_ORP;
+		float cal_offset = 0.0;
+	};
+	struct ORP Orp;
 };
 
 #endif

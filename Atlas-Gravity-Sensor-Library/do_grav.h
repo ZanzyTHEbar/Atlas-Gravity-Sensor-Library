@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 */
 
-#ifndef PH_GRAV_H
-#define PH_GRAV_H
+#ifndef DO_GRAV_H
+#define DO_GRAV_H
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -33,38 +33,34 @@ SOFTWARE
 
 #include <base_grav.h>
 
-class Gravity_pH : public Gravity_Base{
-	public:
-	
-		Gravity_pH(uint8_t pin);
-		
-		bool begin();
-	
-		virtual float read_voltage();
-		float read_ph(float voltage_mV);
-		float read_ph();
-		
-		void cal_mid(float voltage_mV);
-		void cal_mid();
-		
-		void cal_low(float voltage_mV);
-		void cal_low();
-		
-		void cal_high(float voltage_mV);
-		void cal_high();
-	
-		void cal_clear();
-		
-	private:
-		
-		struct PH {
-		  const uint8_t magic = magic_char;
-          const enum grav_type type = GRAV_PH;
-		  float mid_cal = 1500;
-		  float low_cal = 2030;
-		  float high_cal = 975;
-		};
-		struct PH pH;
+#define DEFAULT_SAT_VOLTAGE_CONST (40.0 * 11.0)
+
+class Gravity_DO : public Gravity_Base
+{
+public:
+	Gravity_DO(uint8_t pin);
+
+	bool begin();
+
+	virtual float read_voltage();
+	float read_do_percentage(float voltage_mV);
+	float read_do_percentage();
+
+	float cal();
+	float cal_clear();
+
+protected:
+	static const int volt_avg_len = 1000;
+
+private:
+	const float DEFAULT_SAT_VOLTAGE = DEFAULT_SAT_VOLTAGE_CONST;
+	struct DO
+	{
+		const uint8_t magic = magic_char;
+		const enum grav_type type = GRAV_DO;
+		float full_sat_voltage = DEFAULT_SAT_VOLTAGE_CONST;
+	};
+	struct DO Do;
 };
 
 #endif
