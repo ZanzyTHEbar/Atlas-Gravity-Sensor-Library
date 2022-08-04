@@ -41,9 +41,9 @@ public:
         GRAV_ORP
     };
 
-    virtual bool begin(){}
+    virtual bool begin(){ return true; }
 
-    virtual float read_voltage(){}
+    virtual float read_voltage(){ return 0; }
 
 protected:
     uint8_t pin = A0;
